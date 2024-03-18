@@ -21,21 +21,6 @@ import { appDatasource } from './tasks/app.datasource';
 @Module({
   imports: [TasksModule],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: DataSource,
-      useFactory: async () => {
-        try {
-          await appDatasource.initialize();
-          console.log('Database connected successfully');
-          return appDatasource;
-        } catch (error) {
-          console.log('Error connecting to database');
-          throw error;
-        }
-      },
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

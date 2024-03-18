@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 /**
  * Main App Module, Entry point for all other modules
@@ -15,8 +16,20 @@ import { TasksModule } from './tasks/tasks.module';
 // import: arrays of modules to be used by the modules
 
 @Module({
-  imports: [TasksModule],
+  imports: [
+    TasksModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'ayo',
+      password: 'haywon',
+      database: 'nest_tmb',
+      synchronize: true,
+      autoLoadEntities: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

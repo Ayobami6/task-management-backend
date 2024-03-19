@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
@@ -32,5 +33,19 @@ export class TasksController {
   @Delete('/:id')
   deleteTask(@Param('id') id: string): Promise<void> {
     return this.taskService.deleteTask(id);
+  }
+
+  @Patch('/:id/status')
+  updateTaskStatus(
+    @Param('id') id: string,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+  ): Promise<Task> {
+    const { status } = updateTaskStatusDto;
+    return this.taskService.updateTask(id, status);
+  }
+
+  @Get('/')
+  getAllTasks(@Body() filterDto: GetTaskFilterDto): Promise<Task[]> {
+    return this.taskService.getTasks(filterDto);
   }
 }

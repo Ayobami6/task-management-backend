@@ -30,10 +30,16 @@ export class TasksService {
       throw new NotFoundException(`Task with id ${id} not found`);
   }
 
-  //handler method getting all tasks
-  // getAllTasks(): Task[] {
-  //   return this.tasks;
-  // }
+  async updateTask(id: string, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
+    task.status = status;
+    await TaskRepository.save(task);
+    return task;
+  }
+
+  getTasks(filterDto: GetTaskFilterDto): Promise<Task[]> {
+    return TaskRepository.getTasks(filterDto);
+  }
 
   // getTaskWithFilters(filterDto: GetTaskFilterDto): Task[] {
   //   const { search, status } = filterDto;

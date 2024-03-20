@@ -45,7 +45,7 @@ export class TasksController {
   }
 
   @Get('/')
-  getAllTasks(@Body() filterDto: GetTaskFilterDto): Promise<Task[]> {
+  getAllTasks(@Query() filterDto: GetTaskFilterDto): Promise<Task[]> {
     return this.taskService.getTasks(filterDto);
   }
 }

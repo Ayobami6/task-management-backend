@@ -5,6 +5,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { appDatasource } from './tasks/app.datasource';
+import { AuthModule } from './auth/auth.module';
 
 /**
  * Main App Module, Entry point for all other modules
@@ -19,7 +20,7 @@ import { appDatasource } from './tasks/app.datasource';
 
 @Global()
 @Module({
-  imports: [TasksModule],
+  imports: [TasksModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

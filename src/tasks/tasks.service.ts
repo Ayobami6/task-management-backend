@@ -11,7 +11,7 @@ export class TasksService {
   // contains the business logic for the controller handler
   constructor(@Inject(DataSource) private dataSource: DataSource) {}
 
-  async getTaskById(id: string, user): Promise<Task> {
+  async getTaskById(id: string, user: User): Promise<Task> {
     const task = await this.dataSource
       .getRepository(Task)
       .findOne({ where: { id: id, user: user } });
@@ -25,7 +25,7 @@ export class TasksService {
     return TaskRepository.createTask(createTaskDto, user);
   }
 
-  async deleteTask(id: string, user): Promise<void> {
+  async deleteTask(id: string, user: User): Promise<void> {
     const result = await this.dataSource
       .getRepository(Task)
       .delete({ id, user });
@@ -40,7 +40,7 @@ export class TasksService {
     return task;
   }
 
-  getTasks(filterDto: GetTaskFilterDto, user): Promise<Task[]> {
+  getTasks(filterDto: GetTaskFilterDto, user: User): Promise<Task[]> {
     return TaskRepository.getTasks(filterDto, user);
   }
 }

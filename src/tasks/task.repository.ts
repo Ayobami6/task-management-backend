@@ -4,9 +4,13 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatus } from './task.model';
 import { GetTaskFilterDto } from './dto/get-tasks-filter.dto';
 import { User } from '../auth/auth.entity';
+import { Logger } from '@nestjs/common';
 
 export const TaskRepository = appDatasource.getRepository(Task).extend({
-  async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
+  createTask: async function (
+    createTaskDto: CreateTaskDto,
+    user: User,
+  ): Promise<Task> {
     const { title, description } = createTaskDto;
     const task = this.create({
       title,

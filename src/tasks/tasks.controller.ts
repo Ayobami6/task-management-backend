@@ -6,12 +6,10 @@ import {
   Param,
   Patch,
   Post,
-  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTaskFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
@@ -19,10 +17,13 @@ import { Task } from './task.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../auth/auth.entity';
 import { GetUser } from '../auth/get-user.decorator';
+import { Logger } from '@nestjs/common';
 
 @Controller('tasks')
 @UseGuards(AuthGuard())
 export class TasksController {
+  // create new logger instance
+  private logger = new Logger('TasksController');
   // lets use the injected task service
   constructor(private taskService: TasksService) {}
 
@@ -58,6 +59,11 @@ export class TasksController {
     @Query() filterDto: GetTaskFilterDto,
     @GetUser() user: User,
   ): Promise<Task[]> {
-    return this.taskService.getTasks(filterDto, user);
+    try {
+      this.logger.verbose(`User ${user.username} retrieving all tasks!`);
+      return this.taskService.getTasks(filterDto, user);
+    } catch (e) {
+      this.logger.error(`Error ${e.message}`);
+    }
   }
 }

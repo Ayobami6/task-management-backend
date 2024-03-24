@@ -11,10 +11,10 @@ export class TasksService {
   // contains the business logic for the controller handler
   constructor(@Inject(DataSource) private dataSource: DataSource) {}
 
-  async getTaskById(id: string): Promise<Task> {
+  async getTaskById(id: string, user): Promise<Task> {
     const task = await this.dataSource
       .getRepository(Task)
-      .findOne({ where: { id: id } });
+      .findOne({ where: { id: id, user: user } });
     if (!task) {
       throw new NotFoundException(`Task with id ${id} not found`);
     }
@@ -31,8 +31,8 @@ export class TasksService {
       throw new NotFoundException(`Task with id ${id} not found`);
   }
 
-  async updateTask(id: string, status: TaskStatus): Promise<Task> {
-    const task = await this.getTaskById(id);
+  async updateTask(id: string, status: TaskStatus, user: User): Promise<Task> {
+    const task = await this.getTaskById(id, user);
     task.status = status;
     await TaskRepository.save(task);
     return task;

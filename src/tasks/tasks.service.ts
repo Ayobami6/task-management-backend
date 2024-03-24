@@ -25,8 +25,10 @@ export class TasksService {
     return TaskRepository.createTask(createTaskDto, user);
   }
 
-  async deleteTask(id: string): Promise<void> {
-    const result = await this.dataSource.getRepository(Task).delete(id);
+  async deleteTask(id: string, user): Promise<void> {
+    const result = await this.dataSource
+      .getRepository(Task)
+      .delete({ id, user });
     if (result.affected === 0)
       throw new NotFoundException(`Task with id ${id} not found`);
   }
@@ -41,42 +43,4 @@ export class TasksService {
   getTasks(filterDto: GetTaskFilterDto, user): Promise<Task[]> {
     return TaskRepository.getTasks(filterDto, user);
   }
-
-  // getTaskWithFilters(filterDto: GetTaskFilterDto): Task[] {
-  //   const { search, status } = filterDto;
-  //   let tasks = this.getAllTasks();
-  //
-  //   if (status) {
-  //     tasks = tasks.filter((task) => task.status === status);
-  //   }
-  //
-  //   if (search) {
-  //     tasks = tasks.filter(
-  //       (task) =>
-  //         task.status.includes(search) || task.description.includes(search),
-  //     );
-  //   }
-  //   return tasks;
-  // }
-
-  // getTask(id: string): Task {
-  //   // handle if task not found
-  //   const task = this.tasks.find((task) => task.id === id);
-  //   if (!task) {
-  //     throw new NotFoundException();
-  //   }
-  //   return task;
-  // }
-
-  // deleteTask(id: string): void {
-  //   const taskNew = this.getTask(id);
-  //   // this is redundant
-  //   this.tasks = this.tasks.filter((task) => task.id !== taskNew.id);
-  // }
-  //
-  // updateTask(id: string, status: TaskStatus): Task {
-  //   const task: Task = this.getTask(id);
-  //   task.status = status;
-  //   return task;
-  // }
 }

@@ -6,13 +6,17 @@ import {
   HttpStatus,
   InternalServerErrorException,
 } from '@nestjs/common';
-
+import * as bcrypt from 'bcrypt';
 export const authRepository = appDatasource.getRepository(User).extend({
   async createUser(createUserDto: AuthCredentialsDto): Promise<User> {
     const { username, password } = createUserDto;
+    // hash password
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const user = this.create({
       username,
-      password,
+      password: hashedPassword,
     });
     try {
       await this.save(user);

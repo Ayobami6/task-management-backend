@@ -2,9 +2,6 @@ import { Global, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
-import { appDatasource } from './tasks/app.datasource';
 import { AuthModule } from './auth/auth.module';
 
 /**

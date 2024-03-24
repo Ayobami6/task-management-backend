@@ -17,9 +17,10 @@ export const TaskRepository = appDatasource.getRepository(Task).extend({
     await this.save(task);
     return task;
   },
-  async getTasks(filterDto: GetTaskFilterDto): Promise<Task[]> {
+  async getTasks(filterDto: GetTaskFilterDto, user): Promise<Task[]> {
     const { status, search } = filterDto;
     const query = this.createQueryBuilder('task');
+    query.where({ user });
     if (status) {
       query.andWhere('task.status = :status', { status });
     }

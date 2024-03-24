@@ -38,8 +38,8 @@ export class TasksService {
     return task;
   }
 
-  getTasks(filterDto: GetTaskFilterDto): Promise<Task[]> {
-    return TaskRepository.getTasks(filterDto);
+  getTasks(filterDto: GetTaskFilterDto, user): Promise<Task[]> {
+    return TaskRepository.getTasks(filterDto, user);
   }
 
   // getTaskWithFilters(filterDto: GetTaskFilterDto): Task[] {

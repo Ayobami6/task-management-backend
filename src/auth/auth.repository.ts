@@ -16,7 +16,6 @@ export const authRepository = appDatasource.getRepository(User).extend({
     // hash password
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-
     const user = this.create({
       username,
       password: hashedPassword,

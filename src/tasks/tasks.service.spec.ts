@@ -8,7 +8,6 @@ import { User } from '../auth/auth.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
-import { TaskRepository } from './task.repository';
 
 const mockDataSource = () => ({
   getRepository: jest.fn().mockReturnValue({

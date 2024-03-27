@@ -4,7 +4,6 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatus } from './task.model';
 import { GetTaskFilterDto } from './dto/get-tasks-filter.dto';
 import { User } from '../auth/auth.entity';
-import { Logger } from '@nestjs/common';
 
 export const TaskRepository = appDatasource.getRepository(Task).extend({
   createTask: async function (

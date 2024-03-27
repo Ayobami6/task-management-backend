@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 /**
  * Main App Module, Entry point for all other modules
@@ -17,7 +18,14 @@ import { AuthModule } from './auth/auth.module';
 
 @Global()
 @Module({
-  imports: [TasksModule, AuthModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: [`.env.stage.${process.env.MACHINE}`],
+      isGlobal: true,
+    }),
+    TasksModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

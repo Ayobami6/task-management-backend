@@ -12,8 +12,21 @@ import { Logger } from '@nestjs/common';
       provide: DataSource,
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
+        // can add the database config options here to use the config service
         const logger = new Logger();
         try {
+          // const newDataSource = new DataSource({
+          //   type: 'postgres',
+          //   host: configService.get('DB_HOST'),
+          //   port: configService.get('DB_PORT'),
+          //   username: configService.get('DB_USERNAME'),
+          //   password: configService.get('DB_PASSWORD'),
+          //   database: configService.get('DB_DATABASE'),
+          //   synchronize: true,
+          //   migrationsRun: false,
+          //   entities: [`${__dirname}/../**/**.entity{.ts,.js}`],
+          //   migrations: [`${__dirname}/../migrations/**/*{.ts,.js}`],
+          // });
           console.log(configService.get('DB_HOST'));
           await appDatasource.initialize();
           console.log('Database connected successfully');
@@ -26,6 +39,6 @@ import { Logger } from '@nestjs/common';
       },
     },
   ],
-  exports: [DataSource],
+  exports: [DataSource, ConfigModule],
 })
 export class TypeOrmModule {}

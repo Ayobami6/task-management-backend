@@ -16,9 +16,8 @@ import process from 'process';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => {
-        console.log(config.get('JWT_SECRET'));
         return {
-          secret: process.env.JWT_SECRET,
+          secret: 'secret',
           sigOptions: {
             expiresIn: 3600,
           },

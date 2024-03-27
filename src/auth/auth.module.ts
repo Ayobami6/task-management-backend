@@ -6,6 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import process from 'process';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: async (config: ConfigService) => {
         console.log(config.get('JWT_SECRET'));
         return {
-          secret: config.get('JWT_SECRET'),
+          secret: process.env.JWT_SECRET,
           sigOptions: {
             expiresIn: 3600,
           },

@@ -5,6 +5,7 @@ import { DataSource } from 'typeorm';
 import { JwtPayload } from './interfaces/jwt.interface';
 import { User } from './auth.entity';
 import { ConfigService } from '@nestjs/config';
+import * as process from 'process';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private configService: ConfigService,
   ) {
     super({
-      secretOrKey: configService.get('JWT_SECRET'),
+      secretOrKey: process.env.JWT_SECRET,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
   }
